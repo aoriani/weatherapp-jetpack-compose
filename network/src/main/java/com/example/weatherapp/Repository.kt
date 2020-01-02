@@ -12,6 +12,5 @@ class Repository(private val weatherService: WeatherService) {
         return weatherService.getUserZipcodes().asFlow()
             .map { weatherService.getWeather(it) }
             .toList()
-
     }
 }

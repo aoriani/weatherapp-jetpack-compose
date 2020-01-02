@@ -2,6 +2,7 @@ package com.example.weatherapp.ui
 
 import androidx.compose.Composable
 import androidx.compose.unaryPlus
+import androidx.ui.animation.Crossfade
 import androidx.ui.core.Modifier
 import androidx.ui.core.Text
 import androidx.ui.core.dp
@@ -9,6 +10,9 @@ import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.VerticalScroller
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.layout.*
+import androidx.ui.material.AlertDialog
+import androidx.ui.material.Button
+import androidx.ui.material.CircularProgressIndicator
 import androidx.ui.material.TopAppBar
 import androidx.ui.material.ripple.Ripple
 import androidx.ui.material.surface.Surface
@@ -47,7 +51,6 @@ fun ForecastListItemPreview() {
     ForecastListItem(item = sampleWeather)
 }
 
-
 @Composable
 fun ForecastList(
     viewModel: ViewModel,
@@ -56,15 +59,53 @@ fun ForecastList(
 ) {
     Column {
         TopAppBar(title = { Text(text = +stringResource(R.string.app_name)) })
-        VerticalScroller(modifier = modifier) {
-            Column {
-                viewModel.forecast.forEach {
-                    ForecastListItem(
-                        item = it,
-                        onClick = onClick
+        Crossfade(current = viewModel.status) { isLoading ->
+            when (isLoading) {
+                ViewModel.Status.Loading -> Loading()
+                ViewModel.Status.Loaded -> List(modifier, viewModel, onClick)
+                else -> {
+                    // Snackbar will be available on dev04
+                    AlertDialog(onCloseRequest = {},
+                        text = { Text(text = +stringResource(R.string.error)) },
+                        confirmButton = {
+                            Button(
+                                text = +stringResource(R.string.try_again),
+                                onClick = { viewModel.fetch() })
+                        },
+                        dismissButton = { Button(text = +stringResource(android.R.string.cancel)) }
                     )
                 }
             }
+        }
+
+    }
+}
+
+@Composable
+private fun List(
+    modifier: Modifier,
+    viewModel: ViewModel,
+    onClick: ((Weather) -> Unit)?
+) {
+    VerticalScroller(modifier = modifier) {
+        Column {
+            viewModel.forecast.forEach {
+                ForecastListItem(
+                    item = it,
+                    onClick = onClick
+                )
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun Loading() {
+    Container(modifier = Expanded) {
+        Center {
+            //Indeterminate progress is not working nice
+            CircularProgressIndicator(progress = 0.75f)
         }
     }
 

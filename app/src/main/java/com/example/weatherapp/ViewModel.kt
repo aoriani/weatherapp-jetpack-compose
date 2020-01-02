@@ -9,6 +9,9 @@ import kotlin.coroutines.CoroutineContext
 
 @Model
 class ViewModel(private val repository: Repository) : CoroutineScope {
+    enum class Status {
+        Loading, Loaded, Error
+    }
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -16,24 +19,29 @@ class ViewModel(private val repository: Repository) : CoroutineScope {
     private val mutex = Mutex()
     var forecast: List<Weather> = emptyList()
         private set
-    var isLoading: Boolean = false
+    var status: Status = Status.Loading
         private set
 
-    fun init() {
+    fun fetch() {
         launch {
-            mutex.withTryLock { //prevent concurrent attempts
-                isLoading = true
-
-                var weather: List<Weather> = emptyList()
+            mutex.withTryLock {
+                //prevent concurrent attempts
+                status = Status.Loading
                 withContext(Dispatchers.IO) {
                     try {
+                        var weather: List<Weather> = emptyList()
                         weather = repository.retrieveWeatherForecast()
+                        withContext(Dispatchers.Main) {
+                            forecast = weather
+                            status = Status.Loaded
+                        }
                     } catch (ignore: Exception) {
-
+                        withContext(Dispatchers.Main){
+                            status = Status.Error
+                        }
                     }
                 }
-                forecast = weather
-                isLoading = false
+
             }
         }
     }

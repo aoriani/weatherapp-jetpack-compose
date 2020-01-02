@@ -2,7 +2,7 @@ package com.example.weatherapp.model
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.example.weatherapp.R
+import com.example.weatherapp.network.R
 
 data class Weather(
     val city: String,

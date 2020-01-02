@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun AppContent() {
 
-    val viewModel = +memo { ViewModel(Repository(WeatherService)).apply { init() } }
+    val viewModel = +memo { ViewModel(Repository(WeatherService)).apply { fetch() } }
 
     Crossfade(current = Navigation.currentScreen) { screen ->
         Surface(color = (+MaterialTheme.colors()).background) {
