@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sunny_weather">Sunny</string>
+    <string name="sunny_weather_description">Sunny the whole day. Low temperatures in the morning</string>
+
+    <string name="cloudy_weather">Cloudy</string>
+    <string name="cloudy_weather_description">Cloudy in the afternoon. No rain</string>
+
+    <string name="rainy_weather">Rainy</string>
+    <string name="rainy_weather_description">Sparse showers during the day. Clear sky at night.</string>
+
+    <string name="weather_desc">%1$s,  %2$d°F</string>
+    <string name="network_failed">Network Failure</string>
+    <string name="try_again">Try Again</string>
+</resources>

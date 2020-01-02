@@ -4,7 +4,11 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.weatherapp.R
 
-data class Weather(val city: String, val tempFahrenheit: Int, val condition: Condition) {
+data class Weather(
+    val city: String,
+    val condition: Condition,
+    val tempFahrenheit: Int
+) {
     enum class Condition(@StringRes val label: Int, @StringRes val description: Int, @DrawableRes val icon: Int) {
         CLOUDY(
             R.string.cloudy_weather,
@@ -26,6 +30,6 @@ data class Weather(val city: String, val tempFahrenheit: Int, val condition: Con
 
 val sampleWeather = Weather(
     "Piracicaba",
-    45,
-    Weather.Condition.RAINY
+    Weather.Condition.RAINY,
+    45
 )

@@ -14,12 +14,11 @@ import androidx.ui.material.ripple.Ripple
 import androidx.ui.material.surface.Surface
 import androidx.ui.res.stringResource
 import androidx.ui.tooling.preview.Preview
-import com.example.weatherapp.*
 import com.example.weatherapp.R
+import com.example.weatherapp.VectorImage
+import com.example.weatherapp.ViewModel
 import com.example.weatherapp.model.Weather
 import com.example.weatherapp.model.sampleWeather
-import com.example.weatherapp.navigation.Navigation
-import com.example.weatherapp.navigation.Screen
 
 @Composable
 fun ForecastListItem(item: Weather, onClick: ((Weather) -> Unit)? = null) {
@@ -51,15 +50,15 @@ fun ForecastListItemPreview() {
 
 @Composable
 fun ForecastList(
+    viewModel: ViewModel,
     modifier: Modifier = ExpandedHeight,
-    forecast: List<Weather>,
     onClick: ((Weather) -> Unit)? = null
 ) {
     Column {
         TopAppBar(title = { Text(text = +stringResource(R.string.app_name)) })
         VerticalScroller(modifier = modifier) {
             Column {
-                forecast.forEach {
+                viewModel.forecast.forEach {
                     ForecastListItem(
                         item = it,
                         onClick = onClick
@@ -69,18 +68,4 @@ fun ForecastList(
         }
     }
 
-}
-
-@Preview("Forecast List")
-@Composable
-fun ForecastListPreview() {
-    ForecastList(forecast = generateSequence {
-        sampleWeather
-    }.take(30).toList()) {
-        Navigation.navigateTo(
-            Screen.Forecast(
-                weather = it
-            )
-        )
-    }
 }
