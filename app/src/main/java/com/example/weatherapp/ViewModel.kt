@@ -36,7 +36,7 @@ class ViewModel(private val repository: Repository) : CoroutineScope {
                             status = Status.Loaded
                         }
                     } catch (ignore: Exception) {
-                        withContext(Dispatchers.Main){
+                        withContext(Dispatchers.Main) {
                             status = Status.Error
                         }
                     }

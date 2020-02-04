@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.memo
+import androidx.compose.remember
 import androidx.compose.unaryPlus
 import androidx.ui.animation.Crossfade
 import androidx.ui.core.setContent
@@ -38,10 +39,10 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun AppContent() {
 
-    val viewModel = +memo { ViewModel(Repository(WeatherService)).apply { fetch() } }
+    val viewModel = remember { ViewModel(Repository(WeatherService)).apply { fetch() } }
 
     Crossfade(current = Navigation.currentScreen) { screen ->
-        Surface(color = (+MaterialTheme.colors()).background) {
+        Surface(color = MaterialTheme.colors().background) {
             when (screen) {
                 is Screen.List -> ForecastList(viewModel = viewModel) { weather ->
                     Navigation.navigateTo(Screen.Forecast(weather = weather))

@@ -1,14 +1,13 @@
 package com.example.weatherapp.ui
 
 import androidx.compose.Composable
-import androidx.compose.unaryPlus
 import androidx.ui.core.Text
-import androidx.ui.core.dp
 import androidx.ui.layout.*
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.TopAppBar
 import androidx.ui.res.stringResource
 import androidx.ui.tooling.preview.Preview
+import androidx.ui.unit.dp
 import com.example.weatherapp.*
 import com.example.weatherapp.R
 import com.example.weatherapp.model.Weather
@@ -23,26 +22,26 @@ fun Forecast(weather: Weather) {
                 Navigation.back()
             }
         })
-        Container(modifier = Expanded, padding = EdgeInsets(16.dp)) {
+        Container(modifier = LayoutSize.Fill, padding = EdgeInsets(16.dp)) {
             Center {
                 Column {
                     VectorImage(
-                        modifier = Gravity.Center,
+                        modifier = LayoutGravity.Center,
                         id = weather.condition.icon
                     )
                     Text(
-                        modifier = Gravity.Center,
-                        text = +stringResource(
+                        modifier = LayoutGravity.Center,
+                        text = stringResource(
                             R.string.weather_desc,
-                            +stringResource(weather.condition.label),
+                            stringResource(weather.condition.label),
                             weather.tempFahrenheit
                         ),
-                        style = (+MaterialTheme.typography()).h3
+                        style = MaterialTheme.typography().h3
                     )
-                    HeightSpacer(height = 8.dp)
+                    Spacer(LayoutHeight(8.dp))
                     Text(
-                        modifier = Gravity.Center,
-                        text = +stringResource(weather.condition.description)
+                        modifier = LayoutGravity.Center,
+                        text = stringResource(weather.condition.description)
                     )
                 }
             }
