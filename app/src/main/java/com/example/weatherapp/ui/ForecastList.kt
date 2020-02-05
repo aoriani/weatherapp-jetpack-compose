@@ -9,10 +9,7 @@ import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.VerticalScroller
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.layout.*
-import androidx.ui.material.AlertDialog
-import androidx.ui.material.Button
-import androidx.ui.material.CircularProgressIndicator
-import androidx.ui.material.TopAppBar
+import androidx.ui.material.*
 import androidx.ui.material.ripple.Ripple
 import androidx.ui.material.surface.Surface
 import androidx.ui.res.stringResource
@@ -40,7 +37,6 @@ fun ForecastListItem(item: Weather, onClick: ((Weather) -> Unit)? = null) {
                     }
                 }
             }
-
         }
     }
 }
@@ -64,20 +60,13 @@ fun ForecastList(
                 ViewModel.Status.Loading -> Loading()
                 ViewModel.Status.Loaded -> List(modifier, viewModel, onClick)
                 else -> {
-                    // Snackbar will be available on dev04
-                    AlertDialog(onCloseRequest = {},
-                        text = { Text(text = stringResource(R.string.error)) },
-                        confirmButton = {
-                            Button(
-                                text = stringResource(R.string.try_again),
-                                onClick = { viewModel.fetch() })
-                        },
-                        dismissButton = { Button(text = stringResource(android.R.string.cancel)) }
-                    )
+                    Snackbar(text = stringResource(R.string.error),
+                        actionText = stringResource(R.string.try_again),
+                        onActionClick =  viewModel::fetch,
+                        modifier = LayoutAlign.Bottom)
                 }
             }
         }
-
     }
 }
 
