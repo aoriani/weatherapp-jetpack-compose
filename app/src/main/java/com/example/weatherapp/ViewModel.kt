@@ -4,7 +4,6 @@ import androidx.compose.Model
 import com.example.weatherapp.model.Weather
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
-import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 
 @Model

@@ -8,8 +8,9 @@ import androidx.ui.material.TopAppBar
 import androidx.ui.res.stringResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import com.example.weatherapp.*
 import com.example.weatherapp.R
+import com.example.weatherapp.VectorImage
+import com.example.weatherapp.VectorImageButton
 import com.example.weatherapp.model.Weather
 import com.example.weatherapp.model.sampleWeather
 import com.example.weatherapp.navigation.Navigation
