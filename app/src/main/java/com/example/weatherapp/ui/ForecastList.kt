@@ -1,7 +1,6 @@
 package com.example.weatherapp.ui
 
 import androidx.compose.Composable
-import androidx.compose.unaryPlus
 import androidx.ui.animation.Crossfade
 import androidx.ui.core.Modifier
 import androidx.ui.core.Text
@@ -11,7 +10,6 @@ import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.layout.*
 import androidx.ui.material.*
 import androidx.ui.material.ripple.Ripple
-import androidx.ui.material.surface.Surface
 import androidx.ui.res.stringResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
@@ -25,13 +23,17 @@ import com.example.weatherapp.model.sampleWeather
 fun ForecastListItem(item: Weather, onClick: ((Weather) -> Unit)? = null) {
     Ripple(bounded = true) {
         Clickable(onClick = { onClick?.invoke(item) }) {
-            Surface(shape = RoundedCornerShape(5.dp), elevation = 5.dp, modifier = LayoutPadding(8.dp)) {
+            Surface(
+                shape = RoundedCornerShape(5.dp),
+                elevation = 5.dp,
+                modifier = LayoutPadding(8.dp)
+            ) {
                 Row(modifier = LayoutPadding(16.dp)) {
                     VectorImage(
                         id = item.condition.icon,
                         modifier = LayoutGravity.Center
                     )
-                    Column(modifier = LayoutWidth.Fill + LayoutPadding(left = 8.dp)) {
+                    Column(modifier = LayoutWidth.Fill + LayoutPadding(start = 8.dp)) {
                         Text(text = item.city)
                         Text(text = item.tempFahrenheit.toString(), modifier = LayoutGravity.End)
                     }
@@ -60,10 +62,18 @@ fun ForecastList(
                 ViewModel.Status.Loading -> Loading()
                 ViewModel.Status.Loaded -> List(modifier, viewModel, onClick)
                 else -> {
-                    Snackbar(text = stringResource(R.string.error),
-                        actionText = stringResource(R.string.try_again),
-                        onActionClick =  viewModel::fetch,
-                        modifier = LayoutAlign.Bottom)
+                    Snackbar(
+                        text = { Text(text = stringResource(R.string.error)) },
+                        action = {
+                            TextButton(
+                                contentColor = snackbarPrimaryColorFor(MaterialTheme.colors()),
+                                onClick = viewModel::fetch
+                            ) {
+                                Text(text = stringResource(R.string.try_again))
+                            }
+                        },
+                        modifier = LayoutAlign.Bottom
+                    )
                 }
             }
         }

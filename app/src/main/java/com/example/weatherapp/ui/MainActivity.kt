@@ -3,13 +3,11 @@ package com.example.weatherapp.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
-import androidx.compose.memo
 import androidx.compose.remember
-import androidx.compose.unaryPlus
 import androidx.ui.animation.Crossfade
 import androidx.ui.core.setContent
 import androidx.ui.material.MaterialTheme
-import androidx.ui.material.surface.Surface
+import androidx.ui.material.Surface
 import com.example.weatherapp.Repository
 import com.example.weatherapp.ViewModel
 import com.example.weatherapp.navigation.Navigation
